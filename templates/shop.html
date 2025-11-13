@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ChordChart - Store</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>🎸 CHORDCHART - FIND YOUR SOUND 🎸</header>
+
+  <nav>
+    <a href="{{ url_for('index') }}">HOME</a>
+    <a href="{{ url_for('shop') }}">SHOP</a>
+    <a href="{{ url_for('checkout') }}">CHECKOUT</a>
+    <a href="{{ url_for('cart') }}" id="cart-link">
+      Cart <span id="cart-count" class="cart-count">0</span>
+    </a>
+  </nav>
+
+  <section id="shop">
+    <h2 class="highlight">🎸 Our Featured Guitars 🎸</h2>
+    <div class="shop-grid">
+      <div class="shop-item" data-name="Fender Stratocaster" data-price="45000">
+        <img src="{{ url_for('static', filename='stratocaster.jpg') }}" alt="Fender Stratocaster">
+        <h3>Fender Stratocaster</h3>
+        <p>₱45,000</p>
+        <button class="button add-to-cart">Add to Cart</button>
+      </div>
+
+      <div class="shop-item" data-name="Gibson Les Paul" data-price="75000">
+        <img src="{{ url_for('static', filename='Gibson Les Paul.jpg') }}" alt="Gibson Les Paul">
+        <h3>Gibson Les Paul</h3>
+        <p>₱75,000</p>
+        <button class="button add-to-cart">Add to Cart</button>
+      </div>
+
+      <div class="shop-item" data-name="Ibanez RG Series" data-price="52000">
+        <img src="{{ url_for('static', filename='Ibanez RG Series.jpg') }}" alt="Ibanez RG Series">
+        <h3>Ibanez RG Series</h3>
+        <p>₱52,000</p>
+        <button class="button add-to-cart">Add to Cart</button>
+      </div>
+
+      <div class="shop-item" data-name="Yamaha Acoustic F310" data-price="10500">
+        <img src="{{ url_for('static', filename='Yamaha F310.jpg') }}" alt="Yamaha Acoustic F310">
+        <h3>Yamaha Acoustic F310</h3>
+        <p>₱10,500</p>
+        <button class="button add-to-cart">Add to Cart</button>
+      </div>
+
+      <div class="shop-item" data-name="Taylor 214ce" data-price="65000">
+        <img src="{{ url_for('static', filename='Taylor 214ce.jpg') }}" alt="Taylor 214ce">
+        <h3>Taylor 214ce</h3>
+        <p>₱65,000</p>
+        <button class="button add-to-cart">Add to Cart</button>
+      </div>
+
+      <div class="shop-item" data-name="PRS Custom 24" data-price="90000">
+        <img src="{{ url_for('static', filename='PRS Custom 24.jpg') }}" alt="PRS Custom 24">
+        <h3>PRS Custom 24</h3>
+        <p>₱90,000</p>
+        <button class="button add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 ChordChart Guitar Store. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function updateCartCount() {
+      const cartCount = document.getElementById('cart-count');
+      const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCount.textContent = count;
+    }
+
+    updateCartCount();
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const item = e.target.closest('.shop-item');
+        const name = item.dataset.name;
+        const price = parseInt(item.dataset.price);
+
+        const existing = cart.find(i => i.name === name);
+        if (existing) {
+          existing.quantity++;
+        } else {
+          cart.push({ name, price, quantity: 1 });
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+
+        button.textContent = "✅ Added!";
+        setTimeout(() => button.textContent = "Add to Cart", 1000);
+      });
+    });
+  </script>
+</body>
+</html>

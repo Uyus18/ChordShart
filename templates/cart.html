@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChordCart - Cart</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>🎸 CHORDCART - YOUR CART 🎸</header>
+
+  <nav>
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('shop') }}">Shop</a>
+    <a href="{{ url_for('cart') }}">Cart <span id="cart-count" class="cart-count">0</span></a>
+    <a href="{{ url_for('checkout') }}">Checkout</a>
+  </nav>
+
+  <section id="cart">
+    <h2>🛒 Your Cart</h2>
+    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-total" id="cart-total">Total: ₱0</div>
+    <a href="{{ url_for('checkout') }}" class="button">Proceed to Checkout</a>
+  </section>
+
+  <footer>
+    &copy; 2025 ChordChart Guitar Store. All Rights Reserved.
+  </footer>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    const cartCount = document.getElementById('cart-count');
+
+    function updateCartCount() {
+      const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCount.textContent = count;
+    }
+
+    function renderCart() {
+      cartItemsContainer.innerHTML = '';
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p class="empty-cart">Your cart is empty!</p>';
+        cartTotal.textContent = 'Total: ₱0';
+        updateCartCount();
+        return;
+      }
+
+      let total = 0;
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        const div = document.createElement('div');
+        div.classList.add('cart-item');
+        div.innerHTML = `
+          <div class="item-details">
+            <strong>${item.name}</strong><br>
+            ₱${item.price} x ${item.quantity} = ₱${itemTotal}
+          </div>
+          <button class="remove-item" data-index="${index}">Remove</button>
+        `;
+        cartItemsContainer.appendChild(div);
+      });
+
+      cartTotal.textContent = `Total: ₱${total}`;
+
+      document.querySelectorAll('.remove-item').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const index = e.target.dataset.index;
+          cart.splice(index, 1);
+          localStorage.setItem('cart', JSON.stringify(cart));
+          renderCart();
+        });
+      });
+
+      updateCartCount();
+    }
+
+    renderCart();
+  </script>
+</body>
+</html>

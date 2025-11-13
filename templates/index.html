@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChordChart - Home</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>🎸 WELCOME TO CHORDCHART 🎸</header>
+
+  <nav>
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('shop') }}">Shop</a>
+    <a href="{{ url_for('cart') }}">Cart</a>
+    <a href="{{ url_for('checkout') }}">Checkout</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+  </nav>
+
+  <section>
+    <h2>Welcome, {{ username }}!</h2>
+    <p>Find your perfect guitar, explore our store, and enjoy exclusive offers available only for registered users.</p>
+    <a href="{{ url_for('shop') }}" class="button">Go to Shop</a>
+  </section>
+
+  <footer>
+    &copy; 2025 ChordChart Guitar Store. All Rights Reserved.
+  </footer>
+</body>
+</html>
