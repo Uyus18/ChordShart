@@ -6,28 +6,34 @@
   <title>ChordCart - Checkout</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
+<body class="home-bg">
+
   <header>🎸 CHORDCART - CHECKOUT 🎸</header>
 
   <nav>
     <a href="{{ url_for('index') }}">Home</a>
     <a href="{{ url_for('shop') }}">Shop</a>
     <a href="{{ url_for('cart') }}">Cart</a>
+    <a href="{{ url_for('about') }}">About Us</a>
   </nav>
 
   <section id="checkout">
     <h2>🧾 Checkout</h2>
-    <div id="checkout-items"></div>
-    <div id="checkout-total"><strong>Total: ₱0</strong></div>
+
+    <div id="checkout-summary">
+      <div id="checkout-items"></div>
+      <div id="checkout-total"><strong>Total: ₱0</strong></div>
+      <div id="finalDisplay"><strong>Total with Fees:</strong> ₱<span id="finalTotal">0</span></div>
+    </div>
 
     <form id="checkoutForm">
-      <label>Full Name</label>
-      <input type="text" id="fullname" required>
+      <label for="fullname">Full Name</label>
+      <input type="text" id="fullname" required placeholder="Enter your full name">
 
-      <label>Address</label>
-      <input type="text" id="address" required>
+      <label for="address">Address</label>
+      <input type="text" id="address" required placeholder="Enter your address">
 
-      <label>Payment Method</label>
+      <label for="payment">Payment Method</label>
       <select id="payment" required>
         <option value="" disabled selected>Select</option>
         <option value="delivery">Door-to-Door Delivery</option>
@@ -45,11 +51,7 @@
 
       <div id="gcashSection" style="display:none;">
         <p>📱 Scan to Pay with GCash:</p>
-        <img src="{{ url_for('static', filename='gcash_qr.png') }}" alt="GCash QR" width="200">
-      </div>
-
-      <div id="finalDisplay">
-        <strong>Total with Fees:</strong> ₱<span id="finalTotal">0</span>
+        <img src="{{ url_for('static', filename='gcash_qr.JPG') }}" alt="GCash QR" width="200">
       </div>
 
       <button type="submit" class="button">Place Order</button>
@@ -87,7 +89,7 @@
       cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
         total += itemTotal;
-        checkoutItems.innerHTML += `<div>${item.name} x ${item.quantity} = ₱${itemTotal}</div>`;
+        checkoutItems.innerHTML += `<div class="cart-item">${item.name} x ${item.quantity} = ₱${itemTotal}</div>`;
       });
 
       checkoutTotal.innerHTML = `<strong>Total: ₱${total}</strong>`;
@@ -123,28 +125,6 @@
       alert(`Thank you! Your order (₱${total + deliveryFee}) has been placed.`);
       localStorage.removeItem('cart');
       window.location.href = '{{ url_for("shop") }}';
-
-      document.getElementById("confirmOrderBtn").addEventListener("click", async () => {
-  const items = JSON.parse(localStorage.getItem('cart')) || [];
-  const total = items.reduce((sum, i) => sum + (i.price * i.quantity), 0);
-  const payment_method = document.querySelector('input[name="payment"]:checked').value;
-  const address = document.getElementById("address").value;
-  const location = document.getElementById("location").value;
-
-  const response = await fetch("/submit_cart", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ items, total, payment_method, address, location })
-  });
-
-  const result = await response.json();
-  if (result.success) {
-    alert(`Order placed! Final Total: ₱${result.final_total}`);
-    localStorage.removeItem("cart");
-    window.location.href = "/shop";
-  }
-});
-
     });
 
     renderCheckout();

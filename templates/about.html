@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us - GuitarChart</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <div class="Logo" id="Logo">
+        <h1>Guitar<span class="span1">Chart</span></h1>
+    </div>
+    <nav>
+        <a href="{{ url_for('shop') }}">Shop</a>
+        <a href="{{ url_for('cart') }}">Cart</a>
+        <a href="{{ url_for('checkout') }}">Checkout</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+</header>
+
+<!-- HERO SECTION -->
+<section class="hero3">
+    <div class="text-hero">
+        <h1>Hi, we're <span class="span2">GuitarChart</span></h1>
+        <h3>Your online destination for quality guitars, smooth ordering, and reliable delivery — built for aspiring musicians, hobbyists, and professionals.</h3>
+    </div>
+</section>
+
+<!-- OUR STORY -->
+<section class="about-section">
+    <div class="about-text">
+        <h1>Our Story</h1>
+        <p>GuitarChart started with one idea in mind: to make guitar shopping easier, safer, and more accessible to everyone in the Philippines. Whether you’re a beginner buying your first instrument or an experienced player searching for your next upgrade, we want to simplify your journey.</p>
+        <p>We saw how many musicians struggled with overpriced stores, low-quality products, and unreliable sellers. That's why GuitarChart was created — a trusted online shop where quality and affordability meet.</p>
+        <p>Today, GuitarChart continues to grow because of our passion for music and our commitment to providing customers with guitars they can truly rely on.</p>
+    </div>
+    <div class="about-img-container">
+        <img class="about-img" src="{{ url_for('static', filename='guitarshop1.jpg') }}" alt="Guitar Shop">
+    </div>
+</section>
+
+<!-- OUR MISSION -->
+<section class="about-section reverse">
+    <div class="about-img-container">
+    </div>
+    <div class="about-text">
+        <h1>Our Mission</h1>
+        <p>At GuitarChart, our mission is to bring music closer to every home by offering quality guitars at honest prices.</p>
+        <p>We aim to provide a hassle-free online shopping experience — from browsing, ordering, secure checkout, QR payment options, up to door-to-door delivery.</p>
+        <p>Most importantly, we want every customer to feel supported and confident in every purchase, knowing that GuitarChart values trust, service, and passion for music.</p>
+    </div>
+</section>
+
+<footer>
+    <a href="#Logo" class="hash-link">Back to the Top ^</a>
+    <div class="SocMeds">
+        <a href="#" target="_blank"><img src="{{ url_for('static', filename='facebook.png') }}" alt="facebook"></a>
+        <a href="#" target="_blank"><img src="{{ url_for('static', filename='instagram.png') }}" alt="instagram"></a>
+        <a href="#" target="_blank"><img src="{{ url_for('static', filename='tiktok.png') }}" alt="tiktok"></a>
+    </div>
+    <p>&copy; 2025 GuitarChart. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

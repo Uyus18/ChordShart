@@ -143,6 +143,13 @@ def cart():
     total_price = sum(item["price"] * item["quantity"] for item in cart)
     return render_template("cart.html", cart=cart, total_price=total_price)
 
+
+# --- About Page ---
+@app.route('/about')
+def about():
+    return render_template("about.html")
+
+
 # --- Checkout ---
 @app.route('/checkout', methods=['GET', 'POST'])
 def checkout():

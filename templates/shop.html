@@ -6,7 +6,8 @@
   <title>ChordChart - Store</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
+<body class="home-bg">
+
   <header>🎸 CHORDCHART - FIND YOUR SOUND 🎸</header>
 
   <nav>
@@ -16,6 +17,7 @@
     <a href="{{ url_for('cart') }}" id="cart-link">
       Cart <span id="cart-count" class="cart-count">0</span>
     </a>
+    <a href="{{ url_for('about') }}">About Us</a>
   </nav>
 
   <section id="shop">
